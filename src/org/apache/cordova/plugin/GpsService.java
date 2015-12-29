@@ -18,7 +18,7 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.content.Context;
 
-public class GpsService extends CordovaPlugin implements LocationListener  {
+public class GpsService extends CordovaPlugin{
 
     private LocationManager handle=null;
     @Override
@@ -48,36 +48,10 @@ public class GpsService extends CordovaPlugin implements LocationListener  {
 		  cordova.getActivity().getApplicationContext().sendBroadcast(intent);
 		}*/
 	final Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-	cordova.getActivity().startActivity(intent);
-	//Intent settingsIntent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-		//ctx.startActivity(settingsIntent);
+	cordova.getActivity().startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
     }
 
     public void switchOff(){
-/*       if (handle==null){
-            handle = (LocationManager) cordova.getActivity().getApplicationContext().getSystemService(Context.LOCATION_SERVICE);
-        }
-        boolean isGPSEnabled = handle.isProviderEnabled(LocationManager.GPS_PROVIDER);
-        if (isGPSEnabled){
-          android.content.ContentResolver contentResolver = cordova.getActivity().getApplicationContext().getContentResolver();
-          Settings.Secure.setLocationProviderEnabled(contentResolver, LocationManager.GPS_PROVIDER, false);
-        }*/
     }
-
-     @Override
-     public void onLocationChanged(Location location) {
-     }
- 
-    @Override
-     public void onProviderDisabled(String provider) {
-     }
-     
-    @Override
-     public void onProviderEnabled(String provider) {
-     }
-     
-    @Override
-     public void onStatusChanged(String provider, int status, Bundle extras) {
-     }
 
 }
