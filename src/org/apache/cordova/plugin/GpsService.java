@@ -37,7 +37,7 @@ public class GpsService extends CordovaPlugin implements LocationListener  {
     }
 
     public void switchOn(){
-      if (handle==null){
+     /* if (handle==null){
             handle = (LocationManager) cordova.getActivity().getApplicationContext().getSystemService(Context.LOCATION_SERVICE);
         }
         boolean isGPSEnabled = handle.isProviderEnabled(LocationManager.GPS_PROVIDER);
@@ -46,7 +46,9 @@ public class GpsService extends CordovaPlugin implements LocationListener  {
           Intent intent = new Intent("android.location.GPS_ENABLED_CHANGE");
 		  intent.putExtra("enabled", true);
 		  cordova.getActivity().getApplicationContext().sendBroadcast(intent);
-		}
+		}*/
+	final Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+	startActivity(intent);
     }
 
     public void switchOff(){
