@@ -20,38 +20,38 @@ import android.content.Context;
 
 public class GpsService extends CordovaPlugin{
 
-    private LocationManager handle=null;
     @Override
     public boolean execute(String action, final JSONArray args, CallbackContext callbackContext) {
         PluginResult result = new PluginResult(Status.OK);
+        boolean value=false;
         if ("on".equals(action)){
-             switchOn();
+             value=switchOn();
         }else if ("off".equals(action)){
-             switchOff();
-        } else{
+             value=switchOff();
+        }else if ("provider_enabled".equals(action)){
+             value=isProviderEnabled();
+        }else{
             result = new PluginResult(Status.INVALID_ACTION);
-        callbackContext.sendPluginResult(result);
-      
-      }
+			      callbackContext.sendPluginResult(result);
+        }
+        callbackContext.success(value);
+        return value;
+    }
+
+    public boolean switchOn(){
+  		final Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+  		cordova.getActivity().startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
       return true;
     }
 
-    public void switchOn(){
-     /* if (handle==null){
-            handle = (LocationManager) cordova.getActivity().getApplicationContext().getSystemService(Context.LOCATION_SERVICE);
-        }
-        boolean isGPSEnabled = handle.isProviderEnabled(LocationManager.GPS_PROVIDER);
-        if (!isGPSEnabled){
-          android.content.ContentResolver contentResolver = cordova.getActivity().getApplicationContext().getContentResolver();
-          Intent intent = new Intent("android.location.GPS_ENABLED_CHANGE");
-		  intent.putExtra("enabled", true);
-		  cordova.getActivity().getApplicationContext().sendBroadcast(intent);
-		}*/
-	final Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-	cordova.getActivity().startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
+    public boolean switchOff(){
+      return true;
     }
-
-    public void switchOff(){
-    }
+    
+    public boolean isProviderEnabled(){
+      LocationManager handle=(LocationManager) cordova.getActivity().getApplicationContext().getSystemService(Context.LOCATION_SERVICE);
+	    boolean isGPSEnabled = handle.isProviderEnabled(LocationManager.GPS_PROVIDER);	
+	    return isGPSEnabled;
+	  }
 
 }
