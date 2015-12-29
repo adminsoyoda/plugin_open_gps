@@ -34,7 +34,7 @@ public class GpsService extends CordovaPlugin{
             result = new PluginResult(Status.INVALID_ACTION);
 			      callbackContext.sendPluginResult(result);
         }
-        callbackContext.success(value);
+        //callbackContext.success(value);
         return value;
     }
 
