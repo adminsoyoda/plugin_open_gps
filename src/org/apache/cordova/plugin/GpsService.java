@@ -48,8 +48,7 @@ public class GpsService extends CordovaPlugin implements LocationListener  {
 		  cordova.getActivity().getApplicationContext().sendBroadcast(intent);
 		}*/
 	final Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-	cordova.getActivity().getApplicationContext().startActivity(intent);
-	
+	cordova.getActivity().startActivity(intent);
 	//Intent settingsIntent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
 		//ctx.startActivity(settingsIntent);
     }
