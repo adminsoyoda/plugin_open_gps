@@ -22,21 +22,29 @@ public class GpsService extends CordovaPlugin{
 
     @Override
     public boolean execute(String action, final JSONArray args, CallbackContext callbackContext) {
-        PluginResult result = new PluginResult(Status.OK);
-        boolean value=false;
-        if ("on".equals(action)){
-             value=switchOn();
-        }else if ("off".equals(action)){
-             value=switchOff();
-        }else if ("provider_enabled".equals(action)){
-             value=isProviderEnabled();
-             callbackContext.sendPluginResult(new PluginResult(Status.OK, new JSONArray(value)));
-        }else{
-            result = new PluginResult(Status.INVALID_ACTION);
-			      callbackContext.sendPluginResult(result);
+        try{
+          PluginResult result = new PluginResult(Status.OK);
+          boolean value=false;
+          if ("on".equals(action)){
+               value=switchOn();
+          }else if ("off".equals(action)){
+               value=switchOff();
+          }else if ("provider_enabled".equals(action)){
+               value=isProviderEnabled();
+               callbackContext.sendPluginResult(new PluginResult(Status.OK, new JSONArray(value)));
+          }else{
+              result = new PluginResult(Status.INVALID_ACTION);
+              callbackContext.sendPluginResult(result);
+          }  
+          return true;
+        }
+        catch(JSONException e){
+                    callbackContext.sendPluginResult(new PluginResult(
+                    PluginResult.Status.JSON_EXCEPTION));
+                    return false;
         }
         //callbackContext.success(value);
-        return value;
+        
     }
 
     public boolean switchOn(){
