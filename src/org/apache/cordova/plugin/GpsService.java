@@ -33,7 +33,9 @@ public class GpsService extends CordovaPlugin{
                value=switchOff();
           }else if ("provider_enabled".equals(action)){
                value=isProviderEnabled();
-               callbackContext.sendPluginResult(new PluginResult(Status.OK, new JSONArray(value)));
+               JSONObject jo = new JSONObject();
+               jo.put("value", value);
+               callbackContext.sendPluginResult(new PluginResult(Status.OK, jo));
           }else{
               result = new PluginResult(Status.INVALID_ACTION);
               callbackContext.sendPluginResult(result);
