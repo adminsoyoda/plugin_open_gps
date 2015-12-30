@@ -17,6 +17,8 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.content.Context;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class GpsService extends CordovaPlugin{
 
