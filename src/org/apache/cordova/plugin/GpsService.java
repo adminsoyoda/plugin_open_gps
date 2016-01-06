@@ -51,7 +51,7 @@ public class GpsService extends CordovaPlugin{
               cordova.getActivity().startService(intent);
               DataBase database=new DataBase(cordova.getActivity().getApplicationContext(),"SAC",1);
               ContentValues tableValues = new ContentValues();
-              tableValues.put("ESTADO", 'P');
+              tableValues.put("ESTADO", "P");
               database.insert("APP_GPS_REGISTRO",tableValues);
              // database.close();
           }else{
