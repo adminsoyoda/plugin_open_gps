@@ -10,8 +10,6 @@ import android.location.LocationManager;
 import android.provider.Settings;
 import android.content.Intent;
 import android.net.Uri;
-
-
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
@@ -28,27 +26,27 @@ public class GpsService extends CordovaPlugin{
           PluginResult result = new PluginResult(Status.OK);
           boolean value=false;
           if ("on".equals(action)){
-               value=switchOn();
+              value=switchOn();
           }else if ("off".equals(action)){
-               value=switchOff();
+              value=switchOff();
           }else if ("provider_enabled".equals(action)){
-               value=isProviderEnabled();
-               JSONObject jo = new JSONObject();
-               jo.put("value", value);
-               callbackContext.sendPluginResult(new PluginResult(Status.OK, jo));
+              value=isProviderEnabled();
+              JSONObject jo = new JSONObject();
+              jo.put("value", value);
+              callbackContext.sendPluginResult(new PluginResult(Status.OK, jo));
+          }else if ("get_coordenates".equals(action)){
+              Intent i = new Intent(this, GpsServiceDetector.class);
+              i.putExtra("foo", "bar");
+              cordova.getActivity().startService(i);
           }else{
               result = new PluginResult(Status.INVALID_ACTION);
               callbackContext.sendPluginResult(result);
           }  
           return true;
+        }catch(JSONException e){
+          callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.JSON_EXCEPTION));
+          return false;
         }
-        catch(JSONException e){
-                    callbackContext.sendPluginResult(new PluginResult(
-                    PluginResult.Status.JSON_EXCEPTION));
-                    return false;
-        }
-        //callbackContext.success(value);
-        
     }
 
     public boolean switchOn(){
@@ -58,6 +56,8 @@ public class GpsService extends CordovaPlugin{
     }
 
     public boolean switchOff(){
+      final Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+      cordova.getActivity().startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
       return true;
     }
     
@@ -65,6 +65,28 @@ public class GpsService extends CordovaPlugin{
       LocationManager handle=(LocationManager) cordova.getActivity().getApplicationContext().getSystemService(Context.LOCATION_SERVICE);
 	    boolean isGPSEnabled = handle.isProviderEnabled(LocationManager.GPS_PROVIDER);	
 	    return isGPSEnabled;
-	  }
+	  }   
+
+/*****************************************************************************************************/
+
+    class GpsServiceDetector extends IntentService {
+    
+        public GpsServiceDetector() {            
+            super("test-service");
+        }
+
+        @Override
+        public void onCreate() {
+            super.onCreate();            
+        }
+
+        @Override
+        protected void onHandleIntent(Intent intent) {            
+        }
+    }
+
 
 }
+
+
+
