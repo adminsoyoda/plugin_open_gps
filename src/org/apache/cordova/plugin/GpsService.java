@@ -18,6 +18,17 @@ import android.content.Context;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+
+import android.app.Activity;
+import android.app.IntentService;
+import android.app.Service;
+import android.content.BroadcastReceiver;
+import android.content.ComponentName;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+
+
 public class GpsService extends CordovaPlugin{
 
     @Override
@@ -35,9 +46,8 @@ public class GpsService extends CordovaPlugin{
               jo.put("value", value);
               callbackContext.sendPluginResult(new PluginResult(Status.OK, jo));
           }else if ("get_coordenates".equals(action)){
-              Intent i = new Intent(this, GpsServiceDetector.class);
-              i.putExtra("foo", "bar");
-              cordova.getActivity().startService(i);
+              Intent intent = new Intent(cordova.getActivity().getApplicationContext(), GpsServiceDetector.class);
+              cordova.getActivity().startService(intent);
           }else{
               result = new PluginResult(Status.INVALID_ACTION);
               callbackContext.sendPluginResult(result);
