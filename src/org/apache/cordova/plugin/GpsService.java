@@ -27,8 +27,6 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import org.apache.cordova.plugin.DataBase;
-import android.content.ContentValues;
 
 public class GpsService extends CordovaPlugin{
 
@@ -46,14 +44,6 @@ public class GpsService extends CordovaPlugin{
               JSONObject jo = new JSONObject();
               jo.put("value", value);
               callbackContext.sendPluginResult(new PluginResult(Status.OK, jo));
-          }else if ("get_coordenates".equals(action)){
-              Intent intent = new Intent(cordova.getActivity().getApplicationContext(), GpsServiceDetector.class);
-              cordova.getActivity().startService(intent);
-              DataBase database=new DataBase(cordova.getActivity().getApplicationContext(),"SAC",1);
-              ContentValues tableValues = new ContentValues();
-              tableValues.put("ESTADO", "P");
-              database.insert("APP_GPS_REGISTRO",tableValues);
-             // database.close();
           }else{
               result = new PluginResult(Status.INVALID_ACTION);
               callbackContext.sendPluginResult(result);
@@ -82,27 +72,5 @@ public class GpsService extends CordovaPlugin{
 	    boolean isGPSEnabled = handle.isProviderEnabled(LocationManager.GPS_PROVIDER);	
 	    return isGPSEnabled;
 	  }   
-
-/*****************************************************************************************************/
-
-    class GpsServiceDetector extends IntentService {
-    
-        public GpsServiceDetector() {            
-            super("test-service");
-        }
-
-        @Override
-        public void onCreate() {
-            super.onCreate();            
-        }
-
-        @Override
-        protected void onHandleIntent(Intent intent) {            
-        }
-    }
-
-
-}
-
 
 
