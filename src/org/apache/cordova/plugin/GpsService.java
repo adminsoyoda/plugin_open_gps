@@ -48,8 +48,8 @@ public class GpsService extends CordovaPlugin{
           }else if ("get_coordenates".equals(action)){
               Intent intent = new Intent(cordova.getActivity().getApplicationContext(), GpsServiceDetector.class);
               cordova.getActivity().startService(intent);
-              DataBase database=new DataBase(cordova.getActivity().getApplicationContext(),"SAC",1.0);
-             // database.insert("INSERT INTO APP_GPS_REGISTRO(ESTADO)VALUES('P');");
+              DataBase database=new DataBase(cordova.getActivity().getApplicationContext(),"SAC",1);
+            //  database.insert("APP_GPS_REGISTRO",);
              // database.close();
           }else{
               result = new PluginResult(Status.INVALID_ACTION);
