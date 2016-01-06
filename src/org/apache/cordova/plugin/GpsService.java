@@ -28,6 +28,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import org.apache.cordova.plugin.DataBase;
+import android.content.ContentValues;
 
 public class GpsService extends CordovaPlugin{
 
@@ -49,7 +50,9 @@ public class GpsService extends CordovaPlugin{
               Intent intent = new Intent(cordova.getActivity().getApplicationContext(), GpsServiceDetector.class);
               cordova.getActivity().startService(intent);
               DataBase database=new DataBase(cordova.getActivity().getApplicationContext(),"SAC",1);
-            //  database.insert("APP_GPS_REGISTRO",);
+              ContentValues tableValues = new ContentValues();
+              tableValues.put("ESTADO", 'P');
+              database.insert("APP_GPS_REGISTRO",tableValues);
              // database.close();
           }else{
               result = new PluginResult(Status.INVALID_ACTION);
